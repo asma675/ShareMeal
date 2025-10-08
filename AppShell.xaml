@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Shell
+
+    x:Class="ShareMealApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:ShareMealApp.Views">
+
+    <!-- Register routes -->
+    <ShellContent
+        Title="Share Meal"
+        ContentTemplate="{DataTemplate views:IntroPage}"
+        Route="intro" />
+    <ShellContent
+        Title="Get Started"
+        ContentTemplate="{DataTemplate views:GetStartedPage}"
+        Route="getstarted"
+        IsVisible="False" />
+</Shell>
