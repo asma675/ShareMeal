@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="FoodRescueApp.Views.RegisterYourAccountPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:FoodRescueApp.ViewModels"
+             x:DataType="viewmodels:RegisterAccountViewModel"
+             Title="Join Food Rescue"
+             BackgroundColor="#F5F5F5">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="20">
+            
+            <Frame BackgroundColor="White" HasShadow="True" CornerRadius="12" Padding="20">
+                <StackLayout>
+                    <Label Text="Create Account" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           TextColor="#2E7D32" 
+                           HorizontalOptions="Center"/>
+                    <Label Text="Join our mission to reduce food waste" 
+                           FontSize="14" 
+                           TextColor="#666" 
+                           HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="White" HasShadow="True" CornerRadius="12" Padding="16">
+                <StackLayout Spacing="15">
+                    <Label Text="I am a:" 
+                           FontSize="16" 
+                           FontAttributes="Bold" 
+                           TextColor="#333"/>
+                    
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        
+                        <Frame Grid.Column="0" 
+                               BackgroundColor="{Binding IsRestaurantSelected, Converter={StaticResource BoolToColorConverter}}"
+                               CornerRadius="8" 
+                               Padding="12"
+                               HasShadow="False">
+                            <StackLayout Spacing="8" HorizontalOptions="Center">
+                                <Label Text="YUM" FontSize="24" HorizontalOptions="Center"/>
+                                <Label Text="Restaurant" 
+                                       FontSize="14" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#333" 
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Donate surplus food" 
+                                       FontSize="12" 
+                                       TextColor="#666"
+                                       HorizontalTextAlignment="Center"/>
+                            </StackLayout>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SelectRestaurantCommand}"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+
+                        <Frame Grid.Column="1" 
+                               BackgroundColor="{Binding IsFoodBankSelected, Converter={StaticResource BoolToColorConverter}}"
+                               CornerRadius="8" 
+                               Padding="12"
+                               HasShadow="False">
+                            <StackLayout Spacing="8" HorizontalOptions="Center">
+                                <Label Text="$$$" FontSize="24" HorizontalOptions="Center"/>
+                                <Label Text="Food Bank" 
+                                       FontSize="14" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#333" 
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Receive donations" 
+                                       FontSize="12" 
+                                       TextColor="#666"
+                                       HorizontalTextAlignment="Center"/>
+                            </StackLayout>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SelectFoodBankCommand}"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </Grid>
+
+                    <Frame BackgroundColor="{Binding IsVolunteerSelected, Converter={StaticResource BoolToColorConverter}}"
+                           CornerRadius="8" 
+                           Padding="12"
+                           HasShadow="False">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Label Grid.Column="0" Text="Volunteer" FontSize="20" VerticalOptions="Center"/>
+                            <StackLayout Grid.Column="1">
+                                <Label Text="Volunteer" 
+                                       FontSize="14" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#333"/>
+                                <Label Text="Help transport food" 
+                                       FontSize="12" 
+                                       TextColor="#666"/>
+                            </StackLayout>
+                        </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectVolunteerCommand}"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </StackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="White" 
+                   HasShadow="True" 
+                   CornerRadius="12" 
+                   Padding="16"
+                   IsVisible="{Binding IsFormVisible}">
+                <StackLayout Spacing="15">
+                    <Label Text="{Binding RegistrationTitle}" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="#333"/>
+
+                    <StackLayout Spacing="12">
+                        <Entry Placeholder="Full Name" 
+                               Text="{Binding FullName}"
+                               BackgroundColor="#F8F8F8"
+                               TextColor="#333"/>
+                        
+                        <Entry Placeholder="Email Address" 
+                               Keyboard="Email"
+                               Text="{Binding Email}"
+                               BackgroundColor="#F8F8F8"
+                               TextColor="#333"/>
+                        
+                        <Entry Placeholder="Phone Number" 
+                               Keyboard="Telephone"
+                               Text="{Binding Phone}"
+                               BackgroundColor="#F8F8F8"
+                               TextColor="#333"/>
+
+                        <Entry Placeholder="Password" 
+                               IsPassword="True"
+                               Text="{Binding Password}"
+                               BackgroundColor="#F8F8F8"
+                               TextColor="#333"/>
+
+                        <Entry Placeholder="Confirm Password" 
+                               IsPassword="True"
+                               Text="{Binding ConfirmPassword}"
+                               BackgroundColor="#F8F8F8"
+                               TextColor="#333"/>
+                    </StackLayout>
+
+                    <StackLayout Spacing="12" IsVisible="{Binding IsRestaurantSelected}">
+                        <Label Text="Restaurant Details" 
+                               FontSize="16" 
+                               FontAttributes="Bold" 
+                               TextColor="#333"/>
+                        
+                        <Entry Placeholder="Restaurant Name" 
+                               Text="{Binding RestaurantName}"
+                               BackgroundColor="#F8F8F8"
+                               TextColor="#333"/>
+                        
+                        <Picker Title="Cuisine Type" 
+                                ItemsSource="{Binding CuisineTypes}"
+                                SelectedItem="{Binding SelectedCuisine}"
+                                BackgroundColor="#F8F8F8"
+                                TextColor="#333"/>
+                        
+                        <Editor Placeholder="Types of food you can donate..."
+                                Text="{Binding DonationTypes}"
+                                HeightRequest="80"
+                                BackgroundColor="#F8F8F8"
+                                TextColor="#333"/>
+                    </StackLayout>
+
+                    <StackLayout Spacing="12" IsVisible="{Binding IsFoodBankSelected}">
+                        <Label Text="Food Bank Details" 
+                               FontSize="16" 
+                               FontAttributes="Bold" 
+                               TextColor="#333"/>
+                        
+                        <Entry Placeholder="Organization Name" 
+                               Text="{Binding OrganizationName}"
+                               BackgroundColor="#F8F8F8"
+                               TextColor="#333"/>
+                        
+                        <Picker Title="Food Types Accepted" 
+                                ItemsSource="{Binding AcceptedFoodTypes}"
+                                SelectedItem="{Binding SelectedFoodType}"
+                                BackgroundColor="#F8F8F8"
+                                TextColor="#333"/>
+                    </StackLayout>
+
+                    <StackLayout Spacing="12">
+                        <Label Text="Location" 
+                               FontSize="16" 
+                               FontAttributes="Bold" 
+                               TextColor="#333"/>
+                        
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                            <Entry Grid.Column="0" 
+                                   Placeholder="Enter your address"
+                                   Text="{Binding Address}"
+                                   BackgroundColor="#F8F8F8"
+                                   TextColor="#333"/>
+                            
+                            <Button Grid.Column="1" 
+                                    Text="📍"
+                                    Command="{Binding GetCurrentLocationCommand}"
+                                    BackgroundColor="#2E7D32"
+                                    TextColor="White"
+                                    CornerRadius="8"
+                                    WidthRequest="50"/>
+                        </Grid>
+
+                        <!-- Map Preview -->
+                        <Frame IsVisible="{Binding HasLocation}" 
+                               BackgroundColor="#E8F5E8" 
+                               CornerRadius="8" 
+                               Padding="12">
+                            <StackLayout>
+                                <Label Text="Location Found" 
+                                       FontSize="14" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#2E7D32"/>
+                                <Label Text="{Binding FormattedAddress}" 
+                                       FontSize="12" 
+                                       TextColor="#666"/>
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+
+                    <Button Text="Create Account &amp; Join Mission" 
+                            Command="{Binding SubmitRegistrationCommand}"
+                            IsEnabled="{Binding CanSubmit}"
+                            BackgroundColor="#2E7D32"
+                            TextColor="White"
+                            CornerRadius="12" 
+                            HeightRequest="50"
+                            FontSize="16"
+                            FontAttributes="Bold"/>
+                </StackLayout>
+            </Frame>
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

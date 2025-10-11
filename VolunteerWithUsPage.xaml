@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="FoodRescueApp.Views.VolunteerWithUsPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:FoodRescueApp.ViewModels"
+             x:DataType="viewmodels:VolunteerViewModel"
+             Title="Volunteer Opportunities"
+             BackgroundColor="#F5F5F5">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        
+        
+        <Frame Grid.Row="0" 
+               BackgroundColor="White" 
+               HasShadow="True" 
+               CornerRadius="12" 
+               Margin="16,16,16,8" 
+               Padding="20">
+            <StackLayout Spacing="12">
+                <Label Text="Volunteer With Us" 
+                       FontSize="24" 
+                       FontAttributes="Bold" 
+                       TextColor="#2E7D32"/>
+                <Label Text="Help transport food and fight hunger in your community" 
+                       FontSize="14" 
+                       TextColor="#666"/>
+                
+                
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                    <Frame Grid.Column="0" BackgroundColor="#E8F5E8" CornerRadius="8" Padding="12">
+                        <StackLayout Spacing="5" HorizontalOptions="Center">
+                            <Label Text="Stats" FontSize="16" HorizontalOptions="Center"/>
+                            <Label Text="{Binding AvailableTasksCount}" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   TextColor="#2E7D32" 
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Tasks Available" 
+                                   FontSize="12" 
+                                   TextColor="#666" 
+                                   HorizontalOptions="Center"/>
+                        </StackLayout>
+                    </Frame>
+                    
+                    <Frame Grid.Column="1" BackgroundColor="#FFF3E0" CornerRadius="8" Padding="12">
+                        <StackLayout Spacing="5" HorizontalOptions="Center">
+                            <Label Text="Time" FontSize="16" HorizontalOptions="Center"/>
+                            <Label Text="2h" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   TextColor="#F57C00" 
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Avg. Time" 
+                                   FontSize="12" 
+                                   TextColor="#666" 
+                                   HorizontalOptions="Center"/>
+                        </StackLayout>
+                    </Frame>
+                    
+                    <Frame Grid.Column="2" BackgroundColor="#E3F2FD" CornerRadius="8" Padding="12">
+                        <StackLayout Spacing="5" HorizontalOptions="Center">
+                            <Label Text="Rewards" FontSize="16" HorizontalOptions="Center"/>
+                            <Label Text="{Binding TotalPoints}" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   TextColor="#1976D2" 
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Points Earned" 
+                                   FontSize="12" 
+                                   TextColor="#666" 
+                                   HorizontalOptions="Center"/>
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+            </StackLayout>
+        </Frame>
+
+        
+        <ScrollView Grid.Row="1" Padding="16,8,16,8">
+            <StackLayout Spacing="12">
+                <Label Text="Available Delivery Tasks" 
+                       FontSize="18" 
+                       FontAttributes="Bold" 
+                       TextColor="#333"/>
+                
+                <CollectionView ItemsSource="{Binding AvailableTasks}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BackgroundColor="White" 
+                                   HasShadow="True" 
+                                   CornerRadius="12" 
+                                   Margin="0,4"
+                                   Padding="16">
+                                <StackLayout Spacing="10">
+                                    
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Grid.Column="0" 
+                                               Text="{Binding Title}" 
+                                               FontSize="16" 
+                                               FontAttributes="Bold" 
+                                               TextColor="#333"/>
+                                        <Frame Grid.Column="1" 
+                                               BackgroundColor="{Binding UrgencyColor}" 
+                                               CornerRadius="6" 
+                                               Padding="6,2">
+                                            <Label Text="{Binding Urgency}" 
+                                                   FontSize="10" 
+                                                   FontAttributes="Bold" 
+                                                   TextColor="White"/>
+                                        </Frame>
+                                    </Grid>
+
+                                    
+                                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*,*" 
+                                          RowSpacing="4" ColumnSpacing="8">
+                                        
+                                        <Label Grid.Row="0" Grid.Column="0" 
+                                               Text="Pickup" 
+                                               FontSize="12"/>
+                                        <Label Grid.Row="0" Grid.Column="1" 
+                                               Text="{Binding PickupLocation}" 
+                                               FontSize="14" 
+                                               TextColor="#666"/>
+                                        
+                                        <Label Grid.Row="1" Grid.Column="0" 
+                                               Text="Dropoff" 
+                                               FontSize="12"/>
+                                        <Label Grid.Row="1" Grid.Column="1" 
+                                               Text="{Binding DropoffLocation}" 
+                                               FontSize="14" 
+                                               TextColor="#666"/>
+                                        
+                                        <Label Grid.Row="2" Grid.Column="0" 
+                                               Text="Time" 
+                                               FontSize="12"/>
+                                        <Label Grid.Row="2" Grid.Column="1" 
+                                               Text="{Binding TimeWindow}" 
+                                               FontSize="14" 
+                                               TextColor="#666"/>
+                                    </Grid>
+
+                                    
+                                    <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                                        <Frame Grid.Column="0" 
+                                               BackgroundColor="#FFF3E0" 
+                                               CornerRadius="6" 
+                                               Padding="6,3"
+                                               HasShadow="False">
+                                            <StackLayout Orientation="Horizontal" Spacing="4">
+                                                <Label Text="Rewards" FontSize="10"/>
+                                                <Label Text="{Binding Points, StringFormat='{0} pts'}" 
+                                                       FontSize="12" 
+                                                       FontAttributes="Bold" 
+                                                       TextColor="#F57C00"/>
+                                            </StackLayout>
+                                        </Frame>
+                                        
+                                        <Frame Grid.Column="1" 
+                                               BackgroundColor="#E8F5E8" 
+                                               CornerRadius="6" 
+                                               Padding="6,3"
+                                               HasShadow="False">
+                                            <StackLayout Orientation="Horizontal" Spacing="4">
+                                                <Label Text="CO2" FontSize="10"/>
+                                                <Label Text="{Binding CarbonSaved, StringFormat='{0} kg CO₂'}" 
+                                                       FontSize="12" 
+                                                       FontAttributes="Bold" 
+                                                       TextColor="#2E7D32"/>
+                                            </StackLayout>
+                                        </Frame>
+                                    </Grid>
+
+                                    <Button Text="Accept Task" 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:VolunteerViewModel}}, Path=AcceptTaskCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="#2E7D32"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            HeightRequest="40"
+                                            FontSize="14"
+                                            FontAttributes="Bold"/>
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                
+                <StackLayout IsVisible="{Binding HasNoTasks}" 
+                             VerticalOptions="CenterAndExpand" 
+                             Padding="40">
+                    <Label Text="🎉" 
+                           FontSize="48" 
+                           HorizontalOptions="Center"/>
+                    <Label Text="All tasks completed!" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="#666" 
+                           HorizontalOptions="Center"/>
+                    <Label Text="Check back later for new delivery opportunities" 
+                           FontSize="14" 
+                           TextColor="#999" 
+                           HorizontalOptions="Center"/>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+
+        
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="10" Padding="16,8,16,16">
+            <Button Grid.Column="0" 
+                    Text="My Tasks" 
+                    Command="{Binding ViewMyTasksCommand}"
+                    BackgroundColor="#6c757d"
+                    TextColor="White"
+                    CornerRadius="12"
+                    HeightRequest="50"/>
+            
+            <Button Grid.Column="1" 
+                    Text="Leaderboard" 
+                    Command="{Binding ViewLeaderboardCommand}"
+                    BackgroundColor="#2E7D32"
+                    TextColor="White"
+                    CornerRadius="12"
+                    HeightRequest="50"/>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
