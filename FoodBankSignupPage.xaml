@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ShareMealApp.Views.FoodBankSignupPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Food Bank Sign-up">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+
+            <Label Text="Register Your Food Bank" Style="{StaticResource H1}"/>
+
+            <Frame Style="{StaticResource CardWrap}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Organization" Style="{StaticResource H2}" />
+                    <Entry x:Name="OrgName" Placeholder="Organization name *" />
+                    <Editor x:Name="OrgAddress" HeightRequest="80"
+                            Placeholder="Street, city, postal/ZIP *" AutoSize="TextChanges"/>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <Entry x:Name="ContactPerson" Placeholder="Contact name *" Grid.Column="0"/>
+                        <Entry x:Name="ContactPhone" Placeholder="Phone *" Keyboard="Telephone" Grid.Column="1"/>
+                    </Grid>
+
+                    <Entry x:Name="ContactEmail" Placeholder="Email *" Keyboard="Email"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource CardWrap}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Hours of Operation" Style="{StaticResource H2}"/>
+                    <Label Opacity="0.7" FontSize="13" Text="e.g., Mon–Fri 9–5, Sat 10–2, Sun closed" />
+                    <Editor x:Name="HoursText" HeightRequest="80" AutoSize="TextChanges"
+                            Placeholder="Enter your hours…" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource CardWrap}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Food Types Accepted" Style="{StaticResource H2}"/>
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="6" RowSpacing="6">
+                        <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Spacing="8">
+                            <CheckBox x:Name="CbCanned" VerticalOptions="Center"/>
+                            <Label Text="Canned / shelf-stable" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Grid.Row="0" Grid.Column="1" Spacing="8">
+                            <CheckBox x:Name="CbProduce" VerticalOptions="Center"/>
+                            <Label Text="Fresh produce" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Grid.Row="1" Grid.Column="0" Spacing="8">
+                            <CheckBox x:Name="CbDairy" VerticalOptions="Center"/>
+                            <Label Text="Dairy (refrigerated)" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Spacing="8">
+                            <CheckBox x:Name="CbFrozen" VerticalOptions="Center"/>
+                            <Label Text="Frozen goods" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Spacing="8">
+                            <CheckBox x:Name="CbPrepared" VerticalOptions="Center"/>
+                            <Label Text="Prepared meals" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Grid.Row="2" Grid.Column="1" Spacing="8">
+                            <CheckBox x:Name="CbBakery" VerticalOptions="Center"/>
+                            <Label Text="Bakery" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Grid.Row="3" Grid.Column="0" Spacing="8">
+                            <CheckBox x:Name="CbOther" VerticalOptions="Center"/>
+                            <Label Text="Other" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+
+                        <Entry x:Name="OtherNotes" Grid.Row="3" Grid.Column="1" Placeholder="If other, specify…"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource CardWrap}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Documentation (optional)" Style="{StaticResource H2}"/>
+                    <Button Text="Choose file…" Style="{StaticResource PrimaryBtn}" Clicked="PickFile"/>
+                    <Label x:Name="PickedDoc" FontSize="13" Opacity="0.8" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Text="Cancel" Clicked="GoBack" Grid.Column="0"/>
+                <Button Text="Submit" Style="{StaticResource PrimaryBtn}" Clicked="SubmitForm" Grid.Column="1"/>
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

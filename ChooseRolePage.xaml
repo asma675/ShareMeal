@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ShareMeal.Views.WelcomePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Get Started">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+
+            <Label Text="Pick how you’d like to use Share Meal" Style="{StaticResource H1}" />
+
+            <Frame Style="{StaticResource CardWrap}">
+                <Grid RowDefinitions="Auto,Auto,Auto">
+                    <Label Grid.Row="0" Text="Restaurant" Style="{StaticResource H2}"/>
+                    <Label Grid.Row="1" Text="Post surplus items, set pickup windows, and help neighbors in need."/>
+                    <Button Grid.Row="2" Text="Set up restaurant profile"
+                            Style="{StaticResource PrimaryBtn}"
+                            Clicked="GoRestaurant"/>
+                </Grid>
+            </Frame>
+
+            <Frame Style="{StaticResource CardWrap}">
+                <Grid RowDefinitions="Auto,Auto,Auto">
+                    <Label Grid.Row="0" Text="Food Bank" Style="{StaticResource H2}"/>
+                    <Label Grid.Row="1" Text="Claim nearby donations and coordinate pickups efficiently."/>
+                    <Button Grid.Row="2" Text="Register a food bank"
+                            Style="{StaticResource PrimaryBtn}"
+                            Clicked="GoFoodBank"/>
+                </Grid>
+            </Frame>
+
+            <Button Text="Back" Clicked="GoBack"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,27 +1,16 @@
-using FoodRescueWeb.Services;
+﻿using ObjCRuntime;
+using UIKit;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
-builder.Services.AddScoped<PartnerService>();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+namespace ShareMeal
 {
-    app.UseExceptionHandler("/Error");
-    app.UseHsts();
+    public class Program
+    {
+        // This is the main entry point of the application.
+        static void Main(string[] args)
+        {
+            // if you want to use a different Application Delegate class from "AppDelegate"
+            // you can specify it here.
+            UIApplication.Main(args, null, typeof(AppDelegate));
+        }
+    }
 }
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseRouting();
-
-app.MapRazorPages();
-app.MapBlazorHub();
-app.MapFallbackToPage("/_Host");
-
-app.Run();

@@ -1,32 +1,26 @@
-using FoodRescueApp.ViewModels;
-using FoodRescueApp.Views;
-using FoodRescueApp.Converters;
+﻿using Microsoft.Extensions.Logging;
+using ShareMeal;  
 
-namespace FoodRescueApp;
+
+namespace ShareMeal;
 
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
+
         builder
-            .UseMauiApp<App>()
+            .UseMauiApp<App>()  
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        // Register ViewModels
-        builder.Services.AddTransient<PartnerDirectoryViewModel>();
-        
-        // Register Views
-        builder.Services.AddTransient<PartnerDirectoryPage>();
-
-        // Register Converters
-        builder.Services.AddSingleton<ListToStringConverter>();
-        builder.Services.AddSingleton<IntToBoolConverter>();
-
-
+#if DEBUG
+        builder.Logging.AddDebug();
+#endif
 
         return builder.Build();
     }

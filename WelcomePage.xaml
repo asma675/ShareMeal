@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage x:Class="ShareMeal.Views.WelcomePages"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="About Share Meal">
+
+<ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+
+            <Label Text="Share Meal" Style="{StaticResource H1}" />
+            <Label Text="Quickly connect surplus meals with local food banks." Opacity="0.75"/>
+
+            <Frame Style="{StaticResource CardWrap}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Who We Are" Style="{StaticResource H2}" />
+                    <Label Text="We’re a community-led platform that links restaurants with extra food to food banks that can use it right away."/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource CardWrap}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Our Values" Style="{StaticResource H2}"/>
+                    <Label Text="• Cut down on food waste."/>
+                    <Label Text="• Strengthen food security."/>
+                    <Label Text="• Work together across the community."/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource CardWrap}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Goals" Style="{StaticResource H2}"/>
+                    <Label Text="• Make donating simple for restaurants."/>
+                    <Label Text="• Ensure food banks get timely access to supplies."/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Button Text="Continue" Style="{StaticResource PrimaryBtn}" Clicked="GoNext" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
