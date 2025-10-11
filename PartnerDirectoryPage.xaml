@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="FoodRescueApp.Views.PartnerDirectoryPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:FoodRescueApp.Models"
+             xmlns:viewmodels="clr-namespace:FoodRescueApp.ViewModels"
+             x:DataType="viewmodels:PartnerDirectoryViewModel"
+             Title="Partner Directory"
+             BackgroundColor="#F5F5F5">
+
+    <Grid>
+        <ScrollView>
+            <StackLayout Padding="16" Spacing="16">
+                
+                <!-- Header -->
+                <Frame BackgroundColor="White" HasShadow="True" CornerRadius="12" Padding="20">
+                    <StackLayout>
+                        <Label Text="Partner Directory" 
+                               FontSize="24" 
+                               FontAttributes="Bold" 
+                               TextColor="#2E7D32" 
+                               HorizontalOptions="Center"/>
+                        <Label Text="Food Banks &amp; Restaurants partnered with us" 
+                               FontSize="14" 
+                               TextColor="#666" 
+                               HorizontalOptions="Center"/>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Search and Filters -->
+                <Frame BackgroundColor="White" HasShadow="True" CornerRadius="12" Padding="16">
+                    <StackLayout Spacing="12">
+                        
+                        <!-- Search Bar -->
+                        <SearchBar x:Name="SearchBar"
+                                   Placeholder="Search by name, location..."
+                                   Text="{Binding SearchText}"
+                                   BackgroundColor="#F8F8F8"
+                                   TextColor="#333"/>
+
+                        <!-- Filter Row -->
+                        <Grid ColumnDefinitions="*,*,Auto" ColumnSpacing="8">
+                            
+                            <!-- Type Filter -->
+                            <Picker Grid.Column="0" 
+                                    Title="All Types"
+                                    SelectedItem="{Binding SelectedType}"
+                                    BackgroundColor="#F8F8F8">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type models:PartnerType}">
+                                        <models:PartnerType>FoodBank</models:PartnerType>
+                                        <models:PartnerType>Restaurant</models:PartnerType>
+                                        <models:PartnerType>CommunityFridge</models:PartnerType>
+                                        <models:PartnerType>NGO</models:PartnerType>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+
+                            <!-- Status Filter -->
+                            <Picker Grid.Column="1" 
+                                    Title="All Status"
+                                    SelectedItem="{Binding SelectedStatus}"
+                                    BackgroundColor="#F8F8F8">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type models:ActivityStatus}">
+                                        <models:ActivityStatus>Active</models:ActivityStatus>
+                                        <models:ActivityStatus>Inactive</models:ActivityStatus>
+                                        <models:ActivityStatus>Pending</models:ActivityStatus>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+
+                            <!-- Clear Filters Button -->
+                            <Button Grid.Column="2" 
+                                    Text="Clear" 
+                                    Command="{Binding ClearFiltersCommand}"
+                                    BackgroundColor="#FF6B6B"
+                                    TextColor="White"
+                                    CornerRadius="8"
+                                    WidthRequest="70"/>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Partners List -->
+                <CollectionView ItemsSource="{Binding FilteredPartners}"
+                                BackgroundColor="Transparent">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Partner">
+                            <Frame BackgroundColor="White" 
+                                   HasShadow="True" 
+                                   CornerRadius="12" 
+                                   Margin="0,4"
+                                   Padding="16">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PartnerDirectoryViewModel}}, Path=ViewPartnerDetailsCommand}"
+                                                          CommandParameter="{Binding .}"/>
+                                </Frame.GestureRecognizers>
+                                
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                    
+                                    <!-- Icon and Status -->
+                                    <StackLayout Grid.Column="0" VerticalOptions="Center">
+                                        <Label Text="{Binding TypeIcon}" 
+                                               FontSize="32" 
+                                               HorizontalOptions="Center"/>
+                                        <Ellipse Fill="{Binding StatusColor}" 
+                                                 WidthRequest="12" 
+                                                 HeightRequest="12"
+                                                 HorizontalOptions="Center"/>
+                                    </StackLayout>
+
+                                    <!-- Partner Info -->
+                                    <StackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                                        <Label Text="{Binding Name}" 
+                                               FontSize="18" 
+                                               FontAttributes="Bold" 
+                                               TextColor="#333"/>
+                                        
+                                        <Label Text="{Binding Type}" 
+                                               FontSize="12" 
+                                               TextColor="#666"
+                                               BackgroundColor="#E8F5E8"
+                                               Padding="6,2"
+                                               HorizontalOptions="Start">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding Type}" Value="Restaurant">
+                                                    <Setter Property="BackgroundColor" Value="#FFF3E0"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding Type}" Value="NGO">
+                                                    <Setter Property="BackgroundColor" Value="#E3F2FD"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding Type}" Value="CommunityFridge">
+                                                    <Setter Property="BackgroundColor" Value="#F3E5F5"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        
+                                        <Label Text="{Binding Address}" 
+                                               FontSize="14" 
+                                               TextColor="#666"/>
+                                        
+                                        <Label Text="{Binding Phone}" 
+                                               FontSize="14" 
+                                               TextColor="#2E7D32"/>
+
+                                        <!-- Preferences -->
+                                        <StackLayout Orientation="Horizontal" Spacing="4">
+                                            <Label Text="Preferences:" 
+                                                   FontSize="12" 
+                                                   TextColor="#666"/>
+                                            <Label FontSize="12" TextColor="#666">
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="{}{0}{1}">
+                                                        <Binding Path="DonationPreferences" Converter="{StaticResource ListToStringConverter}"/>
+                                                        <Binding Path="NeedPreferences" Converter="{StaticResource ListToStringConverter}"/>
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                            </Label>
+                                        </StackLayout>
+                                    </StackLayout>
+
+                                    <!-- Stats and Last Activity -->
+                                    <StackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End">
+                                        <Label Text="{Binding TotalDonations, StringFormat='{0} donations'}" 
+                                               FontSize="12" 
+                                               TextColor="#2E7D32"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="End"/>
+                                        <Label Text="{Binding LastActivity, StringFormat='Last: {0:MM/dd}'}" 
+                                               FontSize="10" 
+                                               TextColor="#999"
+                                               HorizontalOptions="End"/>
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Empty State -->
+                <StackLayout IsVisible="{Binding FilteredPartners.Count, Converter={StaticResource IntToBoolConverter}}" 
+                             VerticalOptions="CenterAndExpand" 
+                             Padding="40">
+                    <Label Text="🔍" 
+                           FontSize="48" 
+                           HorizontalOptions="Center"/>
+                    <Label Text="No partners found" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="#666" 
+                           HorizontalOptions="Center"/>
+                    <Label Text="Try adjusting your search or filters" 
+                           FontSize="14" 
+                           TextColor="#999" 
+                           HorizontalOptions="Center"/>
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Loading Overlay -->
+        <Frame IsVisible="{Binding IsLoading}" 
+               BackgroundColor="#80000000" 
+               HasShadow="False">
+            <ActivityIndicator IsRunning="{Binding IsLoading}" 
+                               Color="White" 
+                               VerticalOptions="Center" 
+                               HorizontalOptions="Center"/>
+        </Frame>
+    </Grid>
+
+</ContentPage>

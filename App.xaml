@@ -1,30 +1,19 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
-<Application x:Class="ShareMeal.App"
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application x:Class="FoodRescueApp.App"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FoodRescueApp"
+             xmlns:converters="clr-namespace:FoodRescueApp.Converters">
     <Application.Resources>
-        <Style TargetType="Label">
-            <Setter Property="TextColor" Value="{DynamicResource OnBackground}" />
-        </Style>
-
-        <Style x:Key="CardTitle" TargetType="Label">
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="Margin" Value="0,0,0,8" />
-        </Style>
-
-        <Style x:Key="Card" TargetType="Frame">
-            <Setter Property="CornerRadius" Value="16" />
-            <Setter Property="Padding" Value="16" />
-            <Setter Property="Margin" Value="0,8" />
-            <Setter Property="HasShadow" Value="True" />
-        </Style>
-
-        <Style x:Key="PrimaryButton" TargetType="Button">
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="CornerRadius" Value="12" />
-            <Setter Property="HeightRequest" Value="48" />
-            <Setter Property="Margin" Value="0,12,0,0" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <!-- Converters -->
+            <converters:ListToStringConverter x:Key="ListToStringConverter" />
+            <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

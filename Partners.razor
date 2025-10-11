@@ -1,0 +1,174 @@
+@page "/partners"
+@using FoodRescueWeb.Models
+@using FoodRescueWeb.Services
+@inject PartnerService PartnerService
+
+<PageTitle>Partner Directory - Food Rescue</PageTitle>
+
+<div style="padding: 20px;">
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h1 style="color: #2E7D32; font-size: 2.5rem;">Partner Directory</h1>
+        <p style="color: #666;">Food Banks & Restaurants partnered with us</p>
+    </div>
+
+    <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px;">
+        <input type="text" 
+               placeholder="🔍 Search by name, location..." 
+               @bind="searchText" 
+               @oninput="OnSearchChanged"
+               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 1.1rem; margin-bottom: 15px;" />
+        
+        <div style="display: flex; gap: 10px;">
+            <select @bind="selectedType" @bind:after="ApplyFilters" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                <option value="">All Types</option>
+                <option value="@PartnerType.FoodBank">Food Bank</option>
+                <option value="@PartnerType.Restaurant">Restaurant</option>
+                <option value="@PartnerType.CommunityFridge">Community Fridge</option>
+                <option value="@PartnerType.NGO">NGO</option>
+            </select>
+            
+            <select @bind="selectedStatus" @bind:after="ApplyFilters" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                <option value="">All Status</option>
+                <option value="@ActivityStatus.Active">Active</option>
+                <option value="@ActivityStatus.Inactive">Inactive</option>
+                <option value="@ActivityStatus.Pending">Pending</option>
+            </select>
+            
+            <button @onclick="ClearFilters" style="background: #dc3545; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+                Clear
+            </button>
+        </div>
+    </div>
+
+    @if (filteredPartners.Any())
+    {
+        @foreach (var partner in filteredPartners)
+        {
+            <div style="background: white; margin-bottom: 15px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); cursor: pointer;" 
+                 @onclick="() => ViewPartnerDetails(partner)">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem;">@partner.TypeIcon</div>
+                        <div style="width: 12px; height: 12px; border-radius: 50%; background-color: @partner.StatusColor; margin: 5px auto;"></div>
+                    </div>
+                    
+                    <div style="flex: 1;">
+                        <h3 style="margin: 0 0 5px 0; color: #333;">@partner.Name</h3>
+                        <span style="background: @GetTypeBadgeColor(partner.Type); color: @GetTypeBadgeTextColor(partner.Type); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">
+                            @partner.Type
+                        </span>
+                        <p style="margin: 8px 0 4px 0; color: #666;">📍 @partner.Address, @partner.City</p>
+                        <p style="margin: 4px 0; color: #2E7D32;">📞 @partner.Phone</p>
+                        <p style="margin: 4px 0 0 0; color: #666; font-size: 0.9rem;">
+                            <strong>Preferences:</strong> 
+                            @string.Join(", ", partner.DonationPreferences.Concat(partner.NeedPreferences).Take(3))
+                            @if (partner.DonationPreferences.Concat(partner.NeedPreferences).Count() > 3)
+                            {
+                                <text>...</text>
+                            }
+                        </p>
+                    </div>
+                    
+                    <div style="text-align: right;">
+                        <div style="color: #2E7D32; font-weight: bold;">@partner.TotalDonations donations</div>
+                        <div style="color: #999; font-size: 0.9rem;">Last: @partner.LastActivity.ToString("MM/dd")</div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div style="text-align: center; padding: 60px 20px;">
+            <div style="font-size: 4rem;">🔍</div>
+            <h3 style="color: #666;">No partners found</h3>
+            <p style="color: #999;">Try adjusting your search or filters</p>
+        </div>
+    }
+</div>
+
+@code {
+    private List<Partner> partners = new();
+    private List<Partner> filteredPartners = new();
+    private string searchText = string.Empty;
+    private string selectedType = string.Empty;
+    private string selectedStatus = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        partners = PartnerService.GetPartners();
+        filteredPartners = partners.ToList();
+    }
+
+    private void OnSearchChanged(ChangeEventArgs e)
+    {
+        searchText = e.Value?.ToString() ?? string.Empty;
+        ApplyFilters();
+    }
+
+    private void ApplyFilters()
+    {
+        var filtered = partners.AsEnumerable();
+
+        if (!string.IsNullOrWhiteSpace(searchText))
+        {
+            filtered = filtered.Where(p => 
+                p.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                p.City.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                p.Address.Contains(searchText, StringComparison.OrdinalIgnoreCase));
+        }
+
+        if (!string.IsNullOrEmpty(selectedType) && Enum.TryParse<PartnerType>(selectedType, out var type))
+        {
+            filtered = filtered.Where(p => p.Type == type);
+        }
+
+        if (!string.IsNullOrEmpty(selectedStatus) && Enum.TryParse<ActivityStatus>(selectedStatus, out var status))
+        {
+            filtered = filtered.Where(p => p.Status == status);
+        }
+
+        filteredPartners = filtered.ToList();
+        StateHasChanged();
+    }
+
+    private void ClearFilters()
+    {
+        searchText = string.Empty;
+        selectedType = string.Empty;
+        selectedStatus = string.Empty;
+        filteredPartners = partners.ToList();
+        StateHasChanged();
+    }
+
+    private async Task ViewPartnerDetails(Partner partner)
+    {
+        // For now, just show an alert. In a real app, you'd navigate to a details page
+        await Task.CompletedTask;
+        // You could implement a modal or navigation here
+    }
+
+    private string GetTypeBadgeColor(PartnerType type)
+    {
+        return type switch
+        {
+            PartnerType.FoodBank => "#E8F5E8",
+            PartnerType.Restaurant => "#FFF3E0",
+            PartnerType.NGO => "#E3F2FD",
+            PartnerType.CommunityFridge => "#F3E5F5",
+            _ => "#f8f9fa"
+        };
+    }
+
+    private string GetTypeBadgeTextColor(PartnerType type)
+    {
+        return type switch
+        {
+            PartnerType.FoodBank => "#2E7D32",
+            PartnerType.Restaurant => "#F57C00",
+            PartnerType.NGO => "#1976D2",
+            PartnerType.CommunityFridge => "#7B1FA2",
+            _ => "#6c757d"
+        };
+    }
+}

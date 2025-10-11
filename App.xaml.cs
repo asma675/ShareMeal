@@ -1,6 +1,4 @@
-﻿using ShareMealApp;
-
-namespace ShareMeal;
+namespace FoodRescueApp;
 
 public partial class App : Application
 {
