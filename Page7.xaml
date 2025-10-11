@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.Page7"
+             Title="Food Share Dashboard">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="25">
+
+            <Label Text="Our Current Numbers"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#2E7D32" />
+
+            <BoxView HeightRequest="2"
+                     BackgroundColor="#A5D6A7"
+                     HorizontalOptions="Fill" />
+
+            <Frame BackgroundColor="#E8F5E9"
+                   BorderColor="#A5D6A7"
+                   CornerRadius="15"
+                   Padding="20"
+                   HasShadow="True">
+
+                <VerticalStackLayout Spacing="15">
+
+                    <Label Text="Live Dashboard"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="#1B5E20"
+                           HorizontalOptions="Center" />
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="12">
+
+                        <!-- Meals Provided -->
+                        <Label Grid.Row="0" Grid.Column="0" 
+                               Text="Meals Provided to Date:" 
+                               FontAttributes="Bold"
+                               TextColor="#33691E" />
+                        <Label Grid.Row="0" Grid.Column="1" 
+                               Text="58,230" 
+                               FontSize="20"
+                               TextColor="#4CAF50"
+                               HorizontalOptions="End" />
+
+                        <Label Grid.Row="1" Grid.Column="0" 
+                               Text="Pounds of Food Rescued:" 
+                               FontAttributes="Bold"
+                               TextColor="#33691E" />
+                        <Label Grid.Row="1" Grid.Column="1" 
+                               Text="124,580 lbs" 
+                               FontSize="20"
+                               TextColor="#4CAF50"
+                               HorizontalOptions="End" />
+
+                        <Label Grid.Row="2" Grid.Column="0" 
+                               Text="Active Restaurants:" 
+                               FontAttributes="Bold"
+                               TextColor="#33691E" />
+                        <Label Grid.Row="2" Grid.Column="1" 
+                               Text="36" 
+                               FontSize="20"
+                               TextColor="#4CAF50"
+                               HorizontalOptions="End" />
+
+                        <Label Grid.Row="3" Grid.Column="0" 
+                               Text="Active Food Banks:" 
+                               FontAttributes="Bold"
+                               TextColor="#33691E" />
+                        <Label Grid.Row="3" Grid.Column="1" 
+                               Text="14" 
+                               FontSize="20"
+                               TextColor="#4CAF50"
+                               HorizontalOptions="End" />
+
+
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="#FFFDE7"
+                   BorderColor="#FFF59D"
+                   CornerRadius="15"
+                   Padding="20"
+                   HasShadow="True">
+
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Progress Toward Goals"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="#F57F17"
+                           HorizontalOptions="Center" />
+
+                    <Label Text="Monthly Goal: 75,000 meals"
+                           TextColor="#795548"
+                           FontSize="16" />
+                    <ProgressBar Progress="0.78" ProgressColor="#FFB300" />
+
+                    <Label Text="Annual Goal: 900,000 meals"
+                           TextColor="#795548"
+                           FontSize="16" />
+                    <ProgressBar Progress="0.52" ProgressColor="#FFB300" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
