@@ -1,5 +1,10 @@
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Threading.Tasks; 
+using Microsoft.Maui.Controls; 
 
 namespace FoodRescueApp.ViewModels;
 
@@ -81,7 +86,7 @@ public partial class VolunteerViewModel : ObservableObject
 
             await Application.Current.MainPage.DisplayAlert(
                 "Task Accepted!", 
-                $"You've accepted: {task.Title}\nYou earned {task.Points} points!", 
+                $"" + $"You've accepted: {task.Title}\nYou earned {task.Points} points!", 
                 "OK");
         }
     }
